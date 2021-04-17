@@ -17,10 +17,6 @@ subprocess.run(["cp", "MongoApiConfig.py", fullApiPath])
 subprocess.run(["cp", "run_template.sh", api_path + "/run.sh"])
 subprocess.run(["chmod", "+x", api_path + "/run.sh"])
 
-print("Updating __init__ file")
-Helpers.update_file(fullApiPath + "/__init__.py",
-                    fullApiPath + "/__init__.py",
-                    [{"search": "[apiName]", "replace": api_name}])
 
 print("Updating MongoApi file")
 Helpers.update_file(fullApiPath + "/MongoApi.py",
@@ -42,6 +38,14 @@ else:
 
 apiBroadcastPort = Helpers.confirm_choice("Please enter the port for the API to broadcast: ")
 
+print("Updating __init__ file")
+Helpers.update_file(fullApiPath + "/__init__.py",
+                    fullApiPath + "/__init__.py",
+                    [{"search": "[apiName]", "replace": api_name},
+                     {"search": "[apiBroadcastHttp]", "replace": apiBroadcastHttp},
+                     {"search": "[apiBroadcastIp]", "replace": apiBroadcastIp},
+                     {"search": "[apiBroadcastPort]", "replace": apiBroadcastPort}])
+ 
 Helpers.update_file(fullApiPath + "/MongoApiConfig.py",
                     fullApiPath + "/MongoApiConfig.py",
                     [{"search": "[databaseUrl]", "replace": databaseUrl},

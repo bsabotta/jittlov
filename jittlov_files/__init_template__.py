@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, json, request, Response
+from flask import Flask, json, request, Response, redirect
 
 from flask_apispec.extension import FlaskApiSpec
 from flask_apispec import use_kwargs
@@ -38,6 +38,11 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+
+    @app.route('/')
+    def go_to_swagger():
+        return redirect("[apiBroadcastHttp][apiBroadcastIp]:[apiBroadcastPort]/swagger-ui", code=302)
 
     # READ ----> GET
     @marshal_with(ModelSchema)
